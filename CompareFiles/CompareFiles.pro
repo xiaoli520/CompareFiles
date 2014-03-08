@@ -9,41 +9,10 @@ TARGET = CompareFiles
 TARGET = CompareFilesd
 }
 
-QT       += core gui
+QT       += core gui widgets
 DESTDIR = $$PWD/../bin/CompareFiles/
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TEMPLATE = app
-
-
-LIBS += -L$$PWD/../lib/widgetsPlugin/
-LIBS += -L$$PWD/../lib/mprdevice/
-LIBS += -L$$PWD/../lib/mprplayer/ -llibMPRPlayer
-LIBS += -L$$PWD/../lib/libMPRLicense/ -llicParser
-LIBS += -L$$PWD/../lib/libzip/ -lzip
-LIBS += -L$$PWD/../lib/libSymmCrypt/ -lsymm_crypt -llibsm4_s
-LIBS += -L$$PWD/../lib/libMPRMimeDataFetcher/ -lMPRMimeDataFetcher
-LIBS += -L$$PWD/../lib/fileOperator/
-LIBS += -L$$PWD/../lib/qtSingleApplication/
-LIBS += -L$$PWD/../lib/common_utilities/
-LIBS += -lAdvapi32 -lUser32 -lShell32
-win32:CONFIG(release, debug|release) {
-    LIBS += -lWidgetsPlugin
-    LIBS += -lMPRDeviceAPI_VS2010_MD
-    LIBS += -lQtSingleApplication
-    LIBS += -lcommon_utilities
-    LIBS += -lfileOperator
-}
-else:win32:CONFIG(debug, debug|release) {
-    LIBS += -lWidgetsPlugind
-    LIBS += -lMPRDeviceAPI_VS2010_MDD
-    LIBS += -lQtSingleApplicationd
-    LIBS += -lcommon_utilitiesd
-    LIBS += -lfileOperatord
-}
-else:unix{
-    LIBS += -L$$OUT_PWD/../WidgetsPlugin/ -lWidgetsPlugin
-}
 
 INCLUDEPATH += $$PWD
 INCLUDEPATH += $$PWD/../include/widgetsPlugin
@@ -64,11 +33,24 @@ else:unix{
 }
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+        wmidwidget.cpp \
+        wtopwidget.cpp \
+        wappcomm.cpp
 
-HEADERS  += mainwindow.h
 
-FORMS    += mainwindow.ui
+HEADERS  += mainwindow.h \
+            wmidwidget.h \
+            wtopwidget.h \
+            wappcomm.h \
+            singleton.h
 
 
+FORMS    += mainwindow.ui \
+            wmidwidget.ui \
+            wtopwidget.ui
+
+
+RC_FILE += \
+    comparefiles.rc
 

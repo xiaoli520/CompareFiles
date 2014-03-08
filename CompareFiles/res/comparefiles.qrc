@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qss/mainwindow.qss</file>
+        <file>qss/wmidwidget.qss</file>
+        <file>qss/wtopwidget.qss</file>
+        <file>images/close_checked.png</file>
+        <file>images/Columnbg_left.png</file>
+        <file>images/footerbg.png</file>
+        <file>images/footerbg_mask.png</file>
+        <file>images/icon_Close.png</file>
+        <file>images/icon_Minimize.png</file>
+        <file>images/icon_Restore-Down.png</file>
+        <file>images/maximize.png</file>
+        <file>images/topbg.png</file>
+        <file>images/topbg_mask.png</file>
+    </qresource>
+</RCC>

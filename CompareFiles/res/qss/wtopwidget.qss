@@ -1,0 +1,49 @@
+QPushButton#closeButton
+{
+   border:none;
+   image:url(":/images/icon_Close.png");
+   max-width:30px;
+   min-width:30px;
+   max-height:23px;
+   min-height:23px;
+
+  border:0px solid;
+  border-top-right-radius: 6px;
+}
+QPushButton#closeButton:hover
+{
+   border-image:url(":/images/close_checked.png");
+}
+
+QPushButton#minButton
+{
+    border:none;
+    image:url(":/images/icon_Minimize.png");
+    max-width:30px;
+    min-width:30px;
+    max-height:23px;
+    min-height:23px;
+}
+
+
+QPushButton#maxButton
+{
+    border:none;
+    max-width:30px;
+    min-width:30px;
+    max-height:23px;
+    min-height:23px;
+}
+
+QLabel#logoLabel
+{
+   min-height:30px; 
+   max-height:30px;
+   font-weight:10px;
+   font-size:30px;
+}  
+QLabel#lineLabel
+{
+   border-image:url(":/images/topbg.png") 5;
+   border-width:5px;
+} 

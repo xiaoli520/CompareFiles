@@ -22,8 +22,7 @@ SOURCES += \
 
 HEADERS +=\
         commonUtils_global.h \
-        widgettest.h \
-        singleton.h
+        widgettest.h
 
 unix:!symbian {
     maemo5 {

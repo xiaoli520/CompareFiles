@@ -1,0 +1,5 @@
+WMidWidget
+{
+  border-image:url(":/images/Columnbg_left.png") 5;
+  border-width:5px;
+}

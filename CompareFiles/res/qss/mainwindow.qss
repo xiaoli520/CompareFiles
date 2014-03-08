@@ -1,0 +1,29 @@
+﻿MainWindow
+{
+	border:none;
+  min-width:997px;
+  min-height:720px;
+}
+
+WTopWidget#topbg
+{
+  border-image:url(":/images/topbg.png") 5 5 3 5;
+  border-width:5px 5px 0px 5px;
+  min-height:57px;
+  max-height:57px;
+}
+
+WMidWidget
+{
+  border-image:url(":/images/Columnbg_left.png") 5;
+  border-width:5px;
+}
+
+
+QLabel#footbg
+{
+  border-image:url(":/images/footerbg.png") 4;
+  border-width:4px;
+  min-height:17px;
+  max-height:17px;
+} 
