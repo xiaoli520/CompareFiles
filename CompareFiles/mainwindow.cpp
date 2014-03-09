@@ -14,7 +14,7 @@
 #include <QVariantMap>
 #include "wmidwidget.h"
 #include "wappcomm.h"
-
+#include "wnavigationbar.h"
 #if _MSC_VER >= 1600
 #pragma execution_character_set("utf-8")
 #endif
@@ -56,6 +56,17 @@ MainWindow::MainWindow(QWidget *parent) :
     regBottomLeft = regBottom.intersected(QRect(rectBottom.bottomLeft()-QPoint(0,10), QSize(10,10)));
     regBottomRight = regBottom.intersected(QRect(rectBottom.bottomRight()-QPoint(10,10), QSize(10,10)));
     resize(997,720);
+
+    mouseInOut = new WMouseInOutWidget(this);
+    WNavigationBar* bar= new WNavigationBar(mouseInOut);
+    connect(bar,SIGNAL(setAutoHide(bool)),mouseInOut,SLOT(setIsAutoHide(bool)));
+    mouseInOut->setMinimumHeight(50);
+    mouseInOut->setChildWidget(bar,true);
+    mouseInOut->setIsAutoHide(true);
+    mouseInOut->startShowAutoHide();
+    mouseInOut->setAutoScrollOffset(false);
+   // mouseInOut->startTimer(3000);
+
 }
 
 MainWindow::~MainWindow()
@@ -87,7 +98,12 @@ void MainWindow::closeWindows()
 
 void MainWindow::resizeEvent(QResizeEvent *)
 {
-  // set mask
+    if(mouseInOut)
+    {
+       QRect rect=topWidget->rect();
+       mouseInOut->setGeometry(rect.left(),rect.bottom(),this->rect().width(),mouseInOut->rect().height());
+    }
+       // set mask
        if (!regTopLeft.isEmpty() && !regTopRight.isEmpty() && !regBottomLeft.isEmpty() && !regBottomRight.isEmpty())
        {
            QRect rectTopLeft = regTopLeft.boundingRect();

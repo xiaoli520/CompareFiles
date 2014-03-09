@@ -13,5 +13,7 @@
         <file>images/maximize.png</file>
         <file>images/topbg.png</file>
         <file>images/topbg_mask.png</file>
+        <file>qss/wnavigationbar.qss</file>
+        <file>images/navigationbg.png</file>
     </qresource>
 </RCC>

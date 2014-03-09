@@ -1,0 +1,19 @@
+WNavigationBar
+{
+     border-image:url(":/images/navigationbg.png") 5 5 5 5 stretch stretch;;
+     border-width:5px; 
+}
+
+QPushButton
+{
+  min-width:80px;
+  max-width:80px;
+  max-height:30px;
+  min-height:30px;
+}
+
+QLineEdit
+{
+  max-height:30px;
+  min-height:30px;
+}

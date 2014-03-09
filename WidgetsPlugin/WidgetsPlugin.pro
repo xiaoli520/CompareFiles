@@ -19,13 +19,16 @@ DEFINES += WIDGETSPLUGIN_LIBRARY
 
 SOURCES += \
     wbaseqsswidget.cpp \
-    wbaseqssdialog.cpp
+    wbaseqssdialog.cpp \
+    wmouseinoutwidget.cpp \
+
 
 HEADERS +=\
     widgetsPlugin_global.h \
     wbaseqsswidget.h \
     wbaseqssdialog.h \
-    widgetExtentFun.h
+    widgetExtentFun.h \
+    wmouseinoutwidget.h
 
 unix:!symbian {
     maemo5 {

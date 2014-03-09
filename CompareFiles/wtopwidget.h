@@ -55,7 +55,7 @@ private:
     QPushButton*     m_Maximize;
     QPushButton*     m_Close;
     QLabel*          m_logoLabel;
-    QHBoxLayout*     hboxLayout;
+    QHBoxLayout*     m_hboxLayout;
     QPoint       m_DragPosition;       //定义位置缓存
     QPoint       m_StartPos;
     QPoint       m_ClickPos;

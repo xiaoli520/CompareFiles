@@ -34,9 +34,12 @@ WTopWidget::WTopWidget(QWidget *parent) :
     connect(m_Close, SIGNAL(clicked()), SIGNAL(triggerClose()));
     connect(m_Minimize, SIGNAL( clicked() ), parent, SLOT(showMinimized()));
     connect(m_Maximize, SIGNAL( clicked() ), this, SLOT(showMaxRestore()));
+ //   connect(m_leftFileBtn,SIGNAL(clicked()),this,SLOT(leftFileBtnClick()));
+   // connect(m_rightFileBtn,SIGNAL(clicked()),this,SLOT(rightFileBtnClick()));
+
     connect(this,SIGNAL(showMax()),parent,SLOT(showMaxSize()));
     connect(this,SIGNAL(showNormal()),parent,SLOT(showNormalSize()));
-    hboxLayout = new QHBoxLayout(this);
+    m_hboxLayout = new QHBoxLayout(this);
     QHBoxLayout* right=new QHBoxLayout(this);
     right->addWidget(m_Minimize);
     right->addWidget(m_Maximize);
@@ -52,13 +55,13 @@ WTopWidget::WTopWidget(QWidget *parent) :
     left->setContentsMargins(18,0,0,0);
     left->setSpacing(0);
 
-    hboxLayout->addLayout(left);
-    hboxLayout->addSpacing(400);
-    hboxLayout->addLayout(right);
-    hboxLayout->setSpacing(0);
-    hboxLayout->setMargin(0);
-    hboxLayout->setAlignment(Qt::AlignTop);
-    setLayout(hboxLayout);
+    m_hboxLayout->addLayout(left);
+    m_hboxLayout->addSpacing(400);
+    m_hboxLayout->addLayout(right);
+    m_hboxLayout->setSpacing(0);
+    m_hboxLayout->setMargin(0);
+    m_hboxLayout->setAlignment(Qt::AlignTop);
+    setLayout(m_hboxLayout);
 
 
 

@@ -10,6 +10,7 @@
 #include <QStackedLayout>
 #include "wbaseqsswidget.h"
 #include "wtopwidget.h"
+#include "wmouseinoutwidget.h"
 #include <QBitmap>
 #include <QRegion>
 class LoadStateWidget;
@@ -60,6 +61,8 @@ private:
     QRegion regTopRight;
     QRegion regBottomLeft;
     QRegion regBottomRight;
+
+    WMouseInOutWidget* mouseInOut;
 };
 
 #endif // MAINWINDOW_H

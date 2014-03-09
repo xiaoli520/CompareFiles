@@ -36,19 +36,22 @@ SOURCES += main.cpp\
         mainwindow.cpp \
         wmidwidget.cpp \
         wtopwidget.cpp \
-        wappcomm.cpp
+        wappcomm.cpp \
+    wnavigationbar.cpp
 
 
 HEADERS  += mainwindow.h \
             wmidwidget.h \
             wtopwidget.h \
             wappcomm.h \
-            singleton.h
+            singleton.h \
+    wnavigationbar.h
 
 
 FORMS    += mainwindow.ui \
             wmidwidget.ui \
-            wtopwidget.ui
+            wtopwidget.ui \
+    wnavigationbar.ui
 
 
 RC_FILE += \
