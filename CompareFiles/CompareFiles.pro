@@ -17,7 +17,7 @@ TEMPLATE = app
 INCLUDEPATH += $$PWD
 INCLUDEPATH += $$PWD/../include/widgetsPlugin
 INCLUDEPATH += $$PWD/../include/commonUtils
-
+INCLUDEPATH += $$PWD/../CommFiles/
 LIBS += -L$$PWD/../lib/widgetsPlugin/
 LIBS += -L$$PWD/../lib/commonUtils/
 win32:CONFIG(release, debug|release) {
@@ -37,16 +37,20 @@ SOURCES += main.cpp\
         wmidwidget.cpp \
         wtopwidget.cpp \
         wappcomm.cpp \
-    wnavigationbar.cpp
+    wnavigationbar.cpp \
+    weventcontroller.cpp \
+    wtextbrowser.cpp
 
 
 HEADERS  += mainwindow.h \
             wmidwidget.h \
             wtopwidget.h \
-            wappcomm.h \
             singleton.h \
-    wnavigationbar.h
-
+            wappcomm.h \
+    wnavigationbar.h \
+    wbaseevent.h \
+    weventcontroller.h \
+    wtextbrowser.h
 
 FORMS    += mainwindow.ui \
             wmidwidget.ui \

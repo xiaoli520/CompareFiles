@@ -2,6 +2,7 @@
 #include "ui_wnavigationbar.h"
 #include "wappcomm.h"
 #include <qfiledialog.h>
+#include "weventcontroller.h"
 #include <QDebug>
 
 WNavigationBar::WNavigationBar(QWidget *parent) :
@@ -30,6 +31,9 @@ void WNavigationBar::on_leftFileBtn_clicked()
         emit setAutoHide(true);
     }
     qDebug()<<__FUNCTION__<<"left file name="<<filename;
+    QMap<QString,QVariant> data;
+    data["filename"]=QVariant(filename);
+    PTR_EVENT_CTL->postEvent(WBaseEvent::TYPE_OPEN_LEFT_FILE,data);
 }
 
 void WNavigationBar::on_rightFileBtn_clicked()
@@ -43,4 +47,8 @@ void WNavigationBar::on_rightFileBtn_clicked()
   {
       emit setAutoHide(true);
   }
+
+  QMap<QString,QVariant> data;
+  data["filename"]=QVariant(filename);
+  PTR_EVENT_CTL->postEvent(WBaseEvent::TYPE_OPEN_RIGHT_FILE,data);
 }
