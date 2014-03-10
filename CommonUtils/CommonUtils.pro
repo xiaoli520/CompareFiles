@@ -18,11 +18,11 @@ INCLUDEPATH+=$$PWD
 DEFINES += COMMONUTILS_LIBRARY
 
 SOURCES += \
-    widgettest.cpp
+    uhashtool.cpp
 
 HEADERS +=\
         commonUtils_global.h \
-        widgettest.h
+    uhashtool.h
 
 unix:!symbian {
     maemo5 {
