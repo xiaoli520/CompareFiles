@@ -28,20 +28,22 @@ MainWindow::MainWindow(QWidget *parent) :
    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint);
    setWindowState(windowState() | Qt::WindowActive);
 
-    vBoxLayout = new QVBoxLayout(this);
-    topWidget  = new WTopWidget(this);
-    topWidget->setObjectName("topbg");
-    connect(topWidget, SIGNAL(triggerClose()), this, SLOT(closeWindows()));
-    footLabel  = new QLabel(this);
-    footLabel->setObjectName("footbg");
+    m_vBoxLayout = new QVBoxLayout(this);
+    m_topWidget  = new WTopWidget(this);
+    m_topWidget->setObjectName("topbg");
+    connect(m_topWidget, SIGNAL(triggerClose()), this, SLOT(closeWindows()));
+    m_footLabel  = new QLabel(this);
+    m_footLabel->setObjectName("footbg");
+    m_spaceLabel = new QLabel(this);
 
     WMidWidget* midWidget=new WMidWidget(this);
-    vBoxLayout->addWidget(topWidget);
-    vBoxLayout->addWidget(midWidget);
-    vBoxLayout->addWidget(footLabel);
-    vBoxLayout->setMargin(0);
-    vBoxLayout->setSpacing(0);
-    setLayout(vBoxLayout);
+    m_vBoxLayout->addWidget(m_topWidget);
+    m_vBoxLayout->addWidget(m_spaceLabel);
+    m_vBoxLayout->addWidget(midWidget);
+    m_vBoxLayout->addWidget(m_footLabel);
+    m_vBoxLayout->setMargin(0);
+    m_vBoxLayout->setSpacing(0);
+    setLayout(m_vBoxLayout);
 
     QString fileName=PTR_WAPP_COMM->getQssFilePath("mainwindow.qss");
     loadStyleSheetFromFile(fileName);
@@ -51,21 +53,24 @@ MainWindow::MainWindow(QWidget *parent) :
     QRegion regBottom(QBitmap(PTR_WAPP_COMM->getImagePath("footerbg_mask.png")));
     QRect rectTop = regTop.boundingRect();
     QRect rectBottom = regBottom.boundingRect();
-    regTopLeft = regTop.intersected(QRect(rectTop.topLeft(), QSize(10,10)));
-    regTopRight = regTop.intersected(QRect(rectTop.topRight()-QPoint(10,0), QSize(10,10)));
-    regBottomLeft = regBottom.intersected(QRect(rectBottom.bottomLeft()-QPoint(0,10), QSize(10,10)));
-    regBottomRight = regBottom.intersected(QRect(rectBottom.bottomRight()-QPoint(10,10), QSize(10,10)));
+    m_regTopLeft = regTop.intersected(QRect(rectTop.topLeft(), QSize(10,10)));
+    m_regTopRight = regTop.intersected(QRect(rectTop.topRight()-QPoint(10,0), QSize(10,10)));
+    m_regBottomLeft = regBottom.intersected(QRect(rectBottom.bottomLeft()-QPoint(0,10), QSize(10,10)));
+    m_regBottomRight = regBottom.intersected(QRect(rectBottom.bottomRight()-QPoint(10,10), QSize(10,10)));
     resize(997,720);
 
-    mouseInOut = new WMouseInOutWidget(this);
-    WNavigationBar* bar= new WNavigationBar(mouseInOut);
-    connect(bar,SIGNAL(setAutoHide(bool)),mouseInOut,SLOT(setIsAutoHide(bool)));
-    mouseInOut->setMinimumHeight(50);
-    mouseInOut->setChildWidget(bar,true);
-    mouseInOut->setIsAutoHide(true);
-    mouseInOut->startShowAutoHide();
-    mouseInOut->setAutoScrollOffset(false);
-   // mouseInOut->startTimer(3000);
+    m_mouseInOut = new WMouseInOutWidget(this);
+    WNavigationBar* bar= new WNavigationBar(m_mouseInOut);
+    connect(bar,SIGNAL(setAutoHide(bool)),m_mouseInOut,SLOT(setIsAutoHide(bool)));
+    m_mouseInOut->setMinimumHeight(50);
+    m_mouseInOut->setChildWidget(bar,true);
+    m_mouseInOut->setIsAutoHide(true);
+    m_mouseInOut->startShowAutoHide();
+    m_mouseInOut->setAutoScrollOffset(false);
+    m_spaceLabel->setMinimumHeight(50);
+
+    connect(m_mouseInOut,SIGNAL(mouseInWidget()),this,SLOT(showSpaceLabel()));
+    connect(m_mouseInOut,SIGNAL(mouseOutWidget()),this,SLOT(hideSpaceLabel()));
 
 }
 
@@ -76,18 +81,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::showMaxSize()
 {
-    mRect = normalGeometry();
+    m_mRect = normalGeometry();
     QRect tempRect = QApplication::desktop()->availableGeometry();
     this->setGeometry(tempRect);
-    vBoxLayout->setContentsMargins(0,0,0,0);
+    m_vBoxLayout->setContentsMargins(0,0,0,0);
 }
 
 void MainWindow::showNormalSize()
 {
-    if (!mRect.isNull())
+    if (!m_mRect.isNull())
     {
-        this->setGeometry(mRect);
-        vBoxLayout->setContentsMargins(5,5,5,5);
+        this->setGeometry(m_mRect);
+        m_vBoxLayout->setContentsMargins(5,5,5,5);
     }
 }
 
@@ -98,38 +103,48 @@ void MainWindow::closeWindows()
 
 void MainWindow::resizeEvent(QResizeEvent *)
 {
-    if(mouseInOut)
+    if(m_mouseInOut)
     {
-       QRect rect=topWidget->rect();
-       mouseInOut->setGeometry(rect.left(),rect.bottom(),this->rect().width(),mouseInOut->rect().height());
+       QRect rect=m_topWidget->rect();
+       m_mouseInOut->setGeometry(rect.left(),rect.bottom(),this->rect().width(),m_mouseInOut->rect().height());
     }
        // set mask
-       if (!regTopLeft.isEmpty() && !regTopRight.isEmpty() && !regBottomLeft.isEmpty() && !regBottomRight.isEmpty())
+       if (!m_regTopLeft.isEmpty() && !m_regTopRight.isEmpty() && !m_regBottomLeft.isEmpty() && !m_regBottomRight.isEmpty())
        {
-           QRect rectTopLeft = regTopLeft.boundingRect();
-           QRect rectTopRight = regTopRight.boundingRect();
-           QRect rectBottomLeft = regBottomLeft.boundingRect();
-           QRect rectBottomRight = regBottomRight.boundingRect();
+           QRect rectTopLeft = m_regTopLeft.boundingRect();
+           QRect rectTopRight = m_regTopRight.boundingRect();
+           QRect rectBottomLeft = m_regBottomLeft.boundingRect();
+           QRect rectBottomRight = m_regBottomRight.boundingRect();
 
-           regTopRight.translate(rect().width()-rectTopRight.width()-rectTopRight.x(), 0);
-           regBottomLeft.translate(0, rect().height()-rectBottomLeft.height()-rectBottomLeft.y());
-           regBottomRight.translate(rect().width()-rectBottomRight.width()-rectBottomRight.x(),
+           m_regTopRight.translate(rect().width()-rectTopRight.width()-rectTopRight.x(), 0);
+           m_regBottomLeft.translate(0, rect().height()-rectBottomLeft.height()-rectBottomLeft.y());
+           m_regBottomRight.translate(rect().width()-rectBottomRight.width()-rectBottomRight.x(),
                                     rect().height()-rectBottomRight.height()-rectBottomRight.y());
 
-           rectTopRight = regTopRight.boundingRect();
-           rectBottomLeft = regBottomLeft.boundingRect();
-           rectBottomRight = regBottomRight.boundingRect();
+           rectTopRight = m_regTopRight.boundingRect();
+           rectBottomLeft = m_regBottomLeft.boundingRect();
+           rectBottomRight = m_regBottomRight.boundingRect();
 
            QRegion regMask(QRect(rectTopLeft.bottomLeft(), rectBottomRight.topRight()));
            regMask = regMask.united(QRect(rectTopLeft.topRight(), rectBottomRight.bottomLeft()));
-           regMask = regMask.united(regTopLeft);
-           regMask = regMask.united(regTopRight);
-           regMask = regMask.united(regBottomLeft);
-           regMask = regMask.united(regBottomRight);
+           regMask = regMask.united(m_regTopLeft);
+           regMask = regMask.united(m_regTopRight);
+           regMask = regMask.united(m_regBottomLeft);
+           regMask = regMask.united(m_regBottomRight);
            setMask(regMask);
        }
        else
            clearMask();
 
-       vBoxLayout->setMargin(0);
+       m_vBoxLayout->setMargin(0);
+}
+
+void MainWindow::showSpaceLabel()
+{
+    m_spaceLabel->setVisible(true);
+}
+
+void MainWindow::hideSpaceLabel()
+{
+     m_spaceLabel->setVisible(false);
 }

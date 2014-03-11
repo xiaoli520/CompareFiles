@@ -88,6 +88,7 @@ void WMouseInOutWidget::timerEvent(QTimerEvent * pevent)
             m_childWidget->setVisible(false);
         killTimer(m_timeId);
         m_timeId=0;
+        emit mouseOutWidget();
     }
 }
 
@@ -112,9 +113,11 @@ void WMouseInOutWidget::leaveEvent(QEvent * pevent)
         if(m_timeout == 0)
             m_childWidget->setVisible(false);
         else
+        {
             m_timeId = startTimer(m_timeout);
+            return;
+        }
     }
-    emit mouseOutWidget();
 }
 
 //设置遇到滚动条自动偏移
@@ -168,4 +171,27 @@ void WMouseInOutWidget::resizeEvent(QResizeEvent *pevent)
 			m_oldRect.setWidth(size.width());
 		}
 	}
+}
+
+/**
+ * @brief setChildShow  设置子窗口是否显示
+ * @param isshow
+ */
+void WMouseInOutWidget::setChildShow(bool isshow)
+{
+    if(m_timeId != 0)
+    {
+        killTimer(m_timeId);
+        m_timeId=0;
+    }
+
+    m_childWidget->setVisible(isshow);
+    if(m_isAudoHide && isshow)
+        m_timeId = startTimer(m_timeout);
+
+    if(isshow)
+        emit mouseInWidget();
+    else
+        emit mouseOutWidget();
+
 }

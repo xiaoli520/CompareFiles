@@ -1,6 +1,8 @@
 #include "weventcontroller.h"
 #include <QMutexLocker>
 #include <QApplication>
+#include "wdiffinfoevent.h"
+#include <QEvent>
 
 WEventController::WEventController():QObject()
 {
@@ -71,6 +73,34 @@ void WEventController::postEvent(int eventId)
        }
     }
 }
+
+ void WEventController::postEvent(int eventId,QEvent* pevent)
+ {
+     QMutexLocker locker(&m_mutex);
+     const EventsRegister::const_iterator rit = m_eventRegister.find(eventId);
+     if( rit != m_eventRegister.end()) {
+        Objects::const_iterator it = rit->second.begin();
+        const Objects::const_iterator end = rit->second.end();
+        while( it != end ) {
+            if(pevent->type() > QEvent::User)
+            {
+                if(pevent->type() == WBaseEvent::TYPE_COMPARE_FILE_OVER)
+                {
+                    WDiffInfoEvent* temp=(WDiffInfoEvent*)pevent;
+                    WDiffInfoEvent* postEvent= new WDiffInfoEvent(WBaseEvent::TYPE_COMPARE_FILE_OVER,temp->getDiffDataList());
+                    QApplication::postEvent( *it,postEvent);
+                }
+                else
+                {
+                    WBaseEvent* temp= (WDiffInfoEvent*)pevent;
+                    WBaseEvent* postEvent= new WBaseEvent(temp->type(),temp->getMapData());
+                    QApplication::postEvent( *it,postEvent);
+                }
+            }
+           ++it;
+        }
+     }
+ }
 
 void WEventController::postEvent(int eventId,QMap<QString,QVariant> data)
 {

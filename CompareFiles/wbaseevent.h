@@ -14,12 +14,13 @@ public:
    enum {
       UNKNOWN = QEvent::User,
       TYPE_OPEN_LEFT_FILE,
-      TYPE_OPEN_RIGHT_FILE
+      TYPE_OPEN_RIGHT_FILE,
+      TYPE_COMPARE_FILE_OVER
    };
 
 public:
 
-   explicit WBaseEvent( int const eventId )
+   explicit WBaseEvent( const int  eventId )
    : QEvent( static_cast<QEvent::Type>( eventId ) )
    {
 
@@ -31,9 +32,16 @@ public:
        m_data = data;
    }
 
+
+
    QVariant getData(QString key)
    {
        return m_data[key];
+   }
+
+   QMap<QString,QVariant> getMapData()
+   {
+       return m_data;
    }
 
 private:

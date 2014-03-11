@@ -4,6 +4,7 @@
 #include "weventcontroller.h"
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QFileInfo>
 
 WMidWidget::WMidWidget(QWidget *parent) :
     WBaseQssWidget(parent),
@@ -18,9 +19,9 @@ WMidWidget::WMidWidget(QWidget *parent) :
     m_leftScrollBar->setObjectName("leftScrollBar");
     m_rightScrollBar->setObjectName("rightScrollBar");
 
-    m_leftTextBrowser = new WTextBrowser(m_leftScrollBar,this);
+    m_leftTextBrowser = new WTextBrowser(1,m_leftScrollBar,this);
     m_leftTextBrowser->setObjectName("leftTextBrowser");
-    m_rightTextBrowser = new WTextBrowser(m_rightScrollBar,this);
+    m_rightTextBrowser = new WTextBrowser(2,m_rightScrollBar,this);
     m_rightTextBrowser->setObjectName("rightTextBrowser");
 
 
@@ -56,13 +57,20 @@ WMidWidget::WMidWidget(QWidget *parent) :
     mainLayout->setSpacing(0);
     setLayout( mainLayout );
 
+    m_compareThread = new WCompareThread(this);
+
 }
 
 WMidWidget::~WMidWidget()
 {
     delete ui;
     PTR_EVENT_CTL->removeListenEvent(this);
-    PTR_EVENT_CTL->removeListenEvent(this);
+    if(m_compareThread->isRunning())
+    {
+        m_compareThread->quit();
+        m_compareThread->wait();
+        delete m_compareThread;
+    }
 }
 
 void WMidWidget::customEvent(QEvent *event)
@@ -77,6 +85,8 @@ void WMidWidget::customEvent(QEvent *event)
               qDebug()<<__FUNCTION__<<"filename="<<filename;
               if(m_leftTextBrowser)
                   m_leftTextBrowser->readFile(filename);
+
+              startCompareFile();
               break;
           }
        case WBaseEvent::TYPE_OPEN_RIGHT_FILE:
@@ -85,9 +95,41 @@ void WMidWidget::customEvent(QEvent *event)
             qDebug()<<__FUNCTION__<<"filename="<<filename;
             if(m_rightTextBrowser)
                 m_rightTextBrowser->readFile(filename);
+
+            startCompareFile();
             break;
        }
     default:
         break;
     }
+}
+
+void WMidWidget::startCompareFile()
+{
+   if(!m_leftTextBrowser || m_leftTextBrowser->getFilePath().isEmpty())
+        return;
+
+   if(!m_rightTextBrowser || m_rightTextBrowser->getFilePath().isEmpty())
+       return;
+
+
+    QFileInfo info(m_leftTextBrowser->getFilePath());
+    QFileInfo info2(m_rightTextBrowser->getFilePath());
+
+
+    if(!info.isFile() || !info.exists())
+        return;
+
+    if(!info2.isFile() || !info2.exists())
+        return;
+
+    if(m_compareThread->isRunning())
+    {
+        m_compareThread->quit();
+        m_compareThread->wait();
+    }
+
+    m_compareThread->setFileName(m_leftTextBrowser->getFilePath(),m_rightTextBrowser->getFilePath());
+
+    m_compareThread->start();
 }

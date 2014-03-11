@@ -48,21 +48,24 @@ public slots:
 
      void closeWindows();
 
+     void showSpaceLabel();
+     void hideSpaceLabel();
+
 private:
     Ui::MainWindow *ui;
-    WTopWidget*     topWidget;
-    QStackedLayout* stackLayout;
-    QLabel*         footLabel;
-    QLabel*         midLabel;
-    QVBoxLayout*    vBoxLayout;
-    QBitmap bit;
-    QRect  mRect;
-    QRegion regTopLeft;
-    QRegion regTopRight;
-    QRegion regBottomLeft;
-    QRegion regBottomRight;
+    WTopWidget*     m_topWidget;
+    QLabel*         m_footLabel;
+    QLabel*         m_midLabel;
+    QLabel*         m_spaceLabel;
+    QVBoxLayout*    m_vBoxLayout;
+    QBitmap m_bit;
+    QRect  m_mRect;
+    QRegion m_regTopLeft;
+    QRegion m_regTopRight;
+    QRegion m_regBottomLeft;
+    QRegion m_regBottomRight;
 
-    WMouseInOutWidget* mouseInOut;
+    WMouseInOutWidget* m_mouseInOut;
 };
 
 #endif // MAINWINDOW_H

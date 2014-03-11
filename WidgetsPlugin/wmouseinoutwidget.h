@@ -52,6 +52,11 @@ public slots:
      */
     void setHideTime(int time);
 
+    /**
+     * @brief setChildShow  设置子窗口是否显示
+     * @param isshow
+     */
+    void setChildShow(bool isshow);
 signals:
     void mouseInWidget();
     void mouseOutWidget();

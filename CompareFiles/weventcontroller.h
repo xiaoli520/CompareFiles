@@ -37,11 +37,20 @@ public:
     void postEvent(int eventId,QMap<QString,QVariant> data);
 
     /**
+     * @brief postEvent
+     * @param eventId
+     * @param obj  此参数若是new出来的需自己释放
+     */
+    void postEvent(int eventId,QEvent* obj);
+
+
+    /**
      * @brief sendEvent 以SEND 方式投递事件
      * @param eventId
      */
     void sendEvent(int eventId);
     void sendEvent(int eventId,QMap<QString,QVariant> data);
+
 
     WEventController();
     ~WEventController();

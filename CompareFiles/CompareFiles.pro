@@ -39,7 +39,10 @@ SOURCES += main.cpp\
         wappcomm.cpp \
     wnavigationbar.cpp \
     weventcontroller.cpp \
-    wtextbrowser.cpp
+    wtextbrowser.cpp \
+    wdiffmanager.cpp \
+    wcomparethread.cpp \
+    wtextbrowsernum.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -50,12 +53,18 @@ HEADERS  += mainwindow.h \
     wnavigationbar.h \
     wbaseevent.h \
     weventcontroller.h \
-    wtextbrowser.h
+    wtextbrowser.h \
+    wdiffmanager.h \
+    wcomparethread.h \
+    defines.h \
+    wdiffinfoevent.h \
+    wtextbrowsernum.h
 
 FORMS    += mainwindow.ui \
             wmidwidget.ui \
             wtopwidget.ui \
-    wnavigationbar.ui
+    wnavigationbar.ui \
+    wtextbrowsernum.ui
 
 
 RC_FILE += \

@@ -5,6 +5,7 @@
 #include "wbaseqsswidget.h"
 #include <QScrollBar>
 #include "wtextbrowser.h"
+#include "wcomparethread.h"
 
 namespace Ui {
 class WMidWidget;
@@ -20,6 +21,7 @@ public:
 
     virtual void customEvent(QEvent *event);
     
+    void startCompareFile();
 private:
     Ui::WMidWidget *ui;
 
@@ -27,6 +29,7 @@ private:
     QScrollBar*     m_rightScrollBar;
     WTextBrowser*   m_leftTextBrowser;
     WTextBrowser*   m_rightTextBrowser;
+    WCompareThread* m_compareThread;
 };
 
 #endif // WMIDWIDGET_H
