@@ -10,9 +10,8 @@
 /**
  * @brief The WEventController class 事件投递控制类
  */
-class WEventController : public QObject
+class WEventController
 {
-   Q_OBJECT
 public:
     /**
      * @brief installListenEvent 注册监听事件
@@ -71,8 +70,6 @@ private:
    EventsRegister m_eventRegister;
    QMutex         m_mutex;
 
-
-   DECLARE_SINGLETON_CLASS(WEventController)
 };
 
 #define PTR_EVENT_CTL Singleton<WEventController>::getInstance()

@@ -32,6 +32,8 @@ public:
 
   void paintEvent(QPaintEvent *e);
 
+  QVector<sDiffInfo> getDiffInfo(){ return m_difList;}
+
 private slots:
    void setScrollRange(int min, int max);
    void setScrollValue(int value);

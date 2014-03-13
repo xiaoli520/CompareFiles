@@ -44,11 +44,9 @@ SOURCES += main.cpp\
     wcomparethread.cpp \
     wtextbrowsernum.cpp
 
-
 HEADERS  += mainwindow.h \
             wmidwidget.h \
             wtopwidget.h \
-            singleton.h \
             wappcomm.h \
     wnavigationbar.h \
     wbaseevent.h \
@@ -58,7 +56,8 @@ HEADERS  += mainwindow.h \
     wcomparethread.h \
     defines.h \
     wdiffinfoevent.h \
-    wtextbrowsernum.h
+    wtextbrowsernum.h \
+    ../CommFiles/singleton.h
 
 FORMS    += mainwindow.ui \
             wmidwidget.ui \

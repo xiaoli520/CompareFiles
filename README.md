@@ -17,4 +17,6 @@ build_CommpareFilesApp windows 下自动化编译脚本
 
 package目录 用于发布打包存放目录
 
+CommFiles 目录 用于存放不使用共享库方式在多个项目中使用的文件
+
 开发工具： QT5.1.1 + VS2010

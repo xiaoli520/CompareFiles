@@ -4,9 +4,8 @@
 #include "wdiffinfoevent.h"
 #include <QEvent>
 
-WEventController::WEventController():QObject()
+WEventController::WEventController()
 {
-    setParent(qApp);
 }
 
 WEventController::~WEventController()

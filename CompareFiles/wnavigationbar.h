@@ -23,6 +23,8 @@ private slots:
 
     void on_rightFileBtn_clicked();
 
+    void on_saveFileBtn_clicked();
+
 private:
     Ui::WNavigationBar *ui;
 };

@@ -53,6 +53,13 @@
     <widget class="QLineEdit" name="lefitLineEdit"/>
    </item>
    <item>
+    <widget class="QPushButton" name="saveFileBtn">
+     <property name="text">
+      <string>保存</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLineEdit" name="rightLineEdit"/>
    </item>
    <item>

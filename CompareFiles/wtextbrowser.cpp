@@ -141,7 +141,7 @@ void WTextBrowser::setScrollValue(int value)
                  if(linenum < m_difList.size())
                  {
                      sDiffInfo info=m_difList.at(linenum);
-                     if(!info.m_isEqual && info.m_leftLineCount != 0 && info.m_rightLineCount != 0)
+                     if(!info.m_isEqual)
                      {
                          QColor pc = PTR_WAPP_COMM->getDiffFillColor();
                          QTextLine line = block.layout()->lineAt(i);

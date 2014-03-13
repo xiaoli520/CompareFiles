@@ -49,7 +49,7 @@ WTextBrowserNum::~WTextBrowserNum()
              if(linenum < m_textBrowser->m_difList.size())
              {
                  sDiffInfo info=m_textBrowser->m_difList.at(linenum);
-                 if(!info.m_isEqual && info.m_leftLineCount != 0 && info.m_rightLineCount != 0)
+                 if(!info.m_isEqual)
                      pen.setColor(PTR_WAPP_COMM->getNotDiffNumberLineColor());
              }
              else

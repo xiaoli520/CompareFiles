@@ -52,3 +52,27 @@ void WNavigationBar::on_rightFileBtn_clicked()
   data["filename"]=QVariant(filename);
   PTR_EVENT_CTL->postEvent(WBaseEvent::TYPE_OPEN_RIGHT_FILE,data);
 }
+
+void WNavigationBar::on_saveFileBtn_clicked()
+{
+    emit setAutoHide(false);
+    QString filename=QFileDialog::getSaveFileName(this,QStringLiteral("save"),
+                                                  "",
+                                                  tr("*.txt"));
+     emit setAutoHide(true);
+
+    if(filename.isEmpty())
+        return;
+
+    QFileInfo info(filename);
+    if(info.suffix() != "txt")
+    {
+        filename+=".txt";
+    }
+
+    qDebug()<<__FUNCTION__<<"save file name="<<filename;
+    QMap<QString,QVariant> data;
+    data["filename"]=QVariant(filename);
+    PTR_EVENT_CTL->postEvent(WBaseEvent::TYPE_SAVE_TO_FILE,data);
+
+}

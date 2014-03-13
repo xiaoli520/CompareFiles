@@ -113,8 +113,6 @@ private:
 
     QFont                      m_diffShowFont;
 
-
-    DECLARE_SINGLETON_CLASS(WAppComm)
 };
 
 #define PTR_WAPP_COMM Singleton<WAppComm>::getInstance()

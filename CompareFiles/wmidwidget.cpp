@@ -13,6 +13,7 @@ WMidWidget::WMidWidget(QWidget *parent) :
     ui->setupUi(this);
     PTR_EVENT_CTL->installListenEvent(this,WBaseEvent::TYPE_OPEN_LEFT_FILE);
     PTR_EVENT_CTL->installListenEvent(this,WBaseEvent::TYPE_OPEN_RIGHT_FILE);
+    PTR_EVENT_CTL->installListenEvent(this,WBaseEvent::TYPE_SAVE_TO_FILE);
 
     m_leftScrollBar = new QScrollBar();
     m_rightScrollBar = new QScrollBar();
@@ -99,6 +100,30 @@ void WMidWidget::customEvent(QEvent *event)
             startCompareFile();
             break;
        }
+    case WBaseEvent::TYPE_SAVE_TO_FILE:
+    {
+        QString filename=selfEvent->getData("filename").toString();
+        qDebug()<<__FUNCTION__<<"filename="<<filename;
+        QFile file(filename);
+        if(!file.open(QIODevice::WriteOnly|QIODevice::Truncate|QFile::Text))
+         {
+            qDebug()<<__FUNCTION__<<"open file error name="<<filename;
+            break;
+        }
+        QTextStream out(&file);
+        QVector<sDiffInfo> diflist=m_leftTextBrowser->getDiffInfo();
+        for(int i=0; i < diflist.size(); i++)
+        {
+            if(!diflist[i].m_isEqual)
+            {
+                //只写不相等的行
+                QString str=diflist[i].toString();
+                out<<str<<"\n";
+            }
+        }
+        file.close();
+        break;
+    }
     default:
         break;
     }

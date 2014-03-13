@@ -15,7 +15,8 @@ public:
       UNKNOWN = QEvent::User,
       TYPE_OPEN_LEFT_FILE,
       TYPE_OPEN_RIGHT_FILE,
-      TYPE_COMPARE_FILE_OVER
+      TYPE_COMPARE_FILE_OVER,
+      TYPE_SAVE_TO_FILE
    };
 
 public:

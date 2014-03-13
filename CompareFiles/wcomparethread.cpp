@@ -49,13 +49,17 @@ void WCompareThread::run()
         if(!rightFile.atEnd())
             rightline =rightFile.readLine();
 
-        bool equal=false;
+        bool equal=true;
         if(!leftline.isEmpty() && !rightline.isEmpty())
         {
             size_t left = UHashTool::BKDRHash(leftline.data(),leftline.length());
             size_t right= UHashTool::BKDRHash(rightline.data(),rightline.length());
-            if(left == right)
-                equal=true;
+            if(left != right)
+                equal=false;
+        }
+        else if(!leftline.isEmpty() || !rightline.isEmpty())
+        {
+            equal=false;
         }
 
         sDiffInfo info;
